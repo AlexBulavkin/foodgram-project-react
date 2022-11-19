@@ -11,6 +11,6 @@ alexbulavkin
 ![result of workflow](https://github.com/alexbulavkin/foodgram-project-react/actions/workflows/foodgram.yml/badge.svg)
 
 ### Адрес сервера
-http://62.84.124.20/
-admin - admin
+http://62.84.124.20/ \
+admin - alexbulavkin@gmail.com \
 password - 1
