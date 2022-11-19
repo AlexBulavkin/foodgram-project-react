@@ -37,7 +37,7 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
               sudo docker-compose stop
-              sudo docker-compose rm backend
+              sudo docker-compose rm foodgram_backend_1
               rm .env
               touch .env
               echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
@@ -47,10 +47,10 @@ jobs:
               echo DB_HOST=${{ secrets.DB_HOST }} >> .env
               echo DB_PORT=${{ secrets.DB_PORT }} >> .env
               sudo docker-compose up -d --build
-              sudo docker-compose exec -it backend python manage.py makemigrations
-              sudo docker-compose exec -it backend python manage.py migrate
-              sudo docker-compose exec -it backend python manage.py data_loading
-              sudo docker-compose exec -it backend python manage.py collectstatic --no-input
+              sudo docker-compose exec -it foodgram_backend_1 python manage.py makemigrations
+              sudo docker-compose exec -it foodgram_backend_1 python manage.py migrate
+              sudo docker-compose exec -it foodgram_backend_1 python manage.py data_loading
+              sudo docker-compose exec -it foodgram_backend_1 python manage.py collectstatic --no-input
           
   send_message:
     runs-on: ubuntu-latest
