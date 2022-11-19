@@ -83,7 +83,8 @@ class SubscribeViewSerializer(serializers.ModelSerializer):
     def get_is_subscribed(self, obj):
         """ Метод обработки параметра is_subscribed"""
         return (self.context.get('request').user.is_authenticated
-                and Subscribe.objects.filter(author=obj, user=self.context['request'].user).exists())
+                and Subscribe.objects.filter(
+                    author=obj, user=self.context['request'].user).exists())
 
     def get_recipes(self, obj):
         """Метод получения данных рецептов автора"""

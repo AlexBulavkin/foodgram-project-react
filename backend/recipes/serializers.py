@@ -1,13 +1,10 @@
 from drf_extra_fields.fields import Base64ImageField
-# from jsonschema import ValidationError
-from rest_framework.exceptions import ValidationError
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from users.serializers import CustomUserSerializer
-from django.shortcuts import get_object_or_404
 
 from .models import (Favorite, Ingredient, Recipe, RecipeIngredient,
                      ShoppingCart, Tag)
-
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -92,8 +89,8 @@ class AddRecipeSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError(
                         'Количество должно быть положительным!')
             except Exception:
-                raise serializers.ValidationError({'amount': 'Количество должно'
-                                      'быть целым числом'})
+                raise serializers.ValidationError(
+                    {'amount': 'Количество должно быть целым числом'})
             check_id = ingredient['id']
             check_ingredient = Ingredient.objects.filter(id=check_id)
             if not check_ingredient.exists():
@@ -114,7 +111,8 @@ class AddRecipeSerializer(serializers.ModelSerializer):
                     'Время готовки не может быть'
                     ' больше 600!')
         except Exception:
-            raise serializers.ValidationError({'cooking_time': 'Время должно быть больше 0'})
+            raise serializers.ValidationError(
+                {'cooking_time': 'Время должно быть больше 0'})
         return data
 
     def validate_tags(self, data):
@@ -212,13 +210,15 @@ class ShowRecipeFullSerializer(serializers.ModelSerializer):
         """Проверяет находится ли рецепт в избранном."""
         request = self.context.get('request')
         return (request.user.is_authenticated
-                and Favorite.objects.filter(recipe=obj, user=request.user).exists())
+                and Favorite.objects.filter(
+                    recipe=obj, user=request.user).exists())
 
     def get_is_in_shopping_cart(self, obj):
         """Проверяет находится ли рецепт в продуктовой корзине."""
         request = self.context.get('request')
         return (request.user.is_authenticated
-                and ShoppingCart.objects.filter(recipe=obj, user=request.user).exists())
+                and ShoppingCart.objects.filter(
+                    recipe=obj, user=request.user).exists())
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
