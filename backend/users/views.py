@@ -20,9 +20,7 @@ class SubscribeApiView(APIView):
         pk = kwargs.get('id')
         author = get_object_or_404(User, pk=pk)
         user = request.user
-        obj = Subscribe(author=author, user=user)
-        obj.save()
-
+        Subscribe.objects.create(author=author, user=user)
         serializer = SubscribeViewSerializer(
             author, context={'request': request})
 
